@@ -1,11 +1,9 @@
-from pydantic import BaseModel
-from datetime import datetime
-
+from pydantic import BaseModel,Field
+from datetime import datetime,timezone
 
 class ApiResponse(BaseModel):
-    def __init__(self, message: str, success: bool = True, timestamp: datetime = datetime.now(), data: dict = {}, http_status: int = 200):
-        self.message = message
-        self.success = success
-        self.timestamp = timestamp
-        self.data = data
-        self.http_status = http_status
+    message : str
+    success : bool = True 
+    timestamp : str = Field(default_factory=lambda:datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")) 
+    data : dict = {}
+    http_status : int = 200
